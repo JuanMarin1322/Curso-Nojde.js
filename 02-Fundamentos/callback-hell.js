@@ -33,6 +33,7 @@ const salarios =  [
     }
 ];
 
+const id = 3;
 
 const getEmpleado = ( id, callback) =>{
 
@@ -62,7 +63,8 @@ const getSalario = ( id, callback) =>{
     
 };
 
-const id = 3;
+
+
 getEmpleado( id, ( err, empleado) => {
 
     if (err){
