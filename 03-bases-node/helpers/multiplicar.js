@@ -21,7 +21,7 @@ try {
     }
 
     console.log(salida);
-
+    
 
     fs.writeFileSync(`tabla-${base}.txt`, salida);
 
