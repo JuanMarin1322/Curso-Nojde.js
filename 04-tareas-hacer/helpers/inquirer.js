@@ -7,7 +7,7 @@ const preguntas = [
 
     {
         type: 'list',
-        name: 'opcion',
+        name: 'opt',
         message: '¿Qué desea hacer?',
         choices: [ {
                     value: '1',
@@ -58,13 +58,30 @@ const inquirerMenu = async () => {
     console.log('========================\n'.green);
 
 
-    const { opt } = await inquirer.prompt( preguntas);
+    const {opt} = await inquirer.prompt( preguntas);
     
     return opt;
 
 }
 
+const pausa = async() =>{
+
+    const question = [
+        {
+            type: 'input',
+            name: 'enter',
+            message: `Presione ${'ENTER'.green} para continuar`
+
+        }
+
+    ];
+    console.log('\n');
+    await inquirer.prompt(question);
+}
+
 module.exports = {
 
-    inquirerMenu
+    inquirerMenu,
+    pausa
+    
 }
