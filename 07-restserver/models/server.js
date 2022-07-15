@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 require('dotenv').config();
 
 class Server {
@@ -7,25 +8,28 @@ class Server {
 
         this.app  = express();
         this.port = process.env.PORT;
-
+        this.usuariosRoutePath = '/api/usuarios';
+        
         // Middlewares
-        this.middlewares()
+        this.middlewares();
+
+        this.app.use(cors());
+
         //Rutas de la applicacion 
         this.routes();
     }
 
     middlewares(){
-        // Dirrectorio publico
-        this.app.use(express.static('public'))
 
+        // Dirrectorio publico
+        this.app.use(express.static('public') );
+     
+         
     }
 
     routes() {
 
-        this.app.get('/hola-mundo',  (req, res) => {
-            res.send('Hello World');
-          }); 
-
+       this.app.use( this.usuariosRoutePath, require('../routes/usuarios'));
     }
 
     listen() {
