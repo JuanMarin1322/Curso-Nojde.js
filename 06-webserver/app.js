@@ -23,39 +23,39 @@ app.use( express.static('public') );
 
 
 //hbs
-app.get('/',  (req, res) => {
-  res.render('home', {
-    nombre: 'Juan Camilo Marin',
-    titulo : 'Fututro Inge'
-  });
-});
+// app.get('/',  (req, res) => {
+//   res.render('home', {
+//     nombre: 'Juan Camilo Marin',
+//     titulo : 'Fututro Inge'
+//   });
+// });
 
 // app.get('/generic',  (req, res) => {
 //   res.sendFile(__dirname + '/public/generic.html');
 // });
 //hbs
-app.get('/generic',  (req, res) => {
-  res.render('generic', {
-    nombre: 'Juan Camilo Marin',
-    titulo : 'Fututro Inge'
-  });
-});
+// app.get('/generic',  (req, res) => {
+//   res.render('generic', {
+//     nombre: 'Juan Camilo Marin',
+//     titulo : 'Fututro Inge'
+//   });
+// });
 
 // app.get('/elements',  (req, res) => {
 //   res.sendFile(__dirname + '/public/elements.html');
 // });
 
 //hbs
-app.get('/elements',  (req, res) => {
-  res.render('elements', {
-    nombre: 'Juan Camilo Marin',
-    titulo : 'Fututro Inge'
-  });
-});
+// app.get('/elements',  (req, res) => {
+//   res.render('elements', {
+//     nombre: 'Juan Camilo Marin',
+//     titulo : 'Fututro Inge'
+//   });
+// });
 
-// app.get('*',  (req, res) => {
-//   res.sendFile(__dirname + '/public/404.html');
-// })
+app.get('*',  (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
