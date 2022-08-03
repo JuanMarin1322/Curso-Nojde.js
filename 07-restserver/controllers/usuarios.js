@@ -91,19 +91,26 @@ const usuariosDelete =  async (req, res = response) => {
     
     const { id } = req.params;
 
+    // const uid = req.uid;
+
     //Fisicamente lo borramos
 
     // NO ES RECOMENDADO ELIMIANR UN USUARIO DE LA ABSE DE DATOS MEJOR DAR DE BAJA
     // const usuario = await Usuario.findByIdAndDelete( id );
 
 
-    //Cambiar estadod el usuario
+    //Cambiar estado del usuario
 
     const usuario = await Usuario.findByIdAndUpdate( id,{ estado:false });
 
+    const usuarioAuth = req.usuario;
+
+    
     res.json({
         msg:"Delete API - Controlador",
-        usuario
+        usuario,
+        usuarioAuth
+        //  ,uid
 
         });
     }  
