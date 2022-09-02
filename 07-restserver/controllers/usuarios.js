@@ -2,7 +2,7 @@ const { response} = require('express');
 const bcryptjs = require('bcryptjs');
 
 
-const Usuario = require('../models/usuario');
+const { Usuario } = require('../models');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 
@@ -52,7 +52,7 @@ const usuariosPut =  async (req, res = response) => {
     if( password ){
 
         const salt = bcryptjs.genSaltSync();
-        resto.password =bcryptjs.hashSync( password, salt);
+        resto.password = bcryptjs.hashSync( password, salt);
 
     }
 
@@ -74,9 +74,10 @@ const usuariosPost =  async  (req, res = response) => {
 
     //Verificar que el correo existe
 
+    
     //Encriptar la contraseña
     const salt = bcryptjs.genSaltSync();
-    usuario.password =bcryptjs.hashSync( password, salt);
+    usuario.password = bcryptjs.hashSync( password, salt);
     
     //Guardar en base de datos
     await usuario.save();

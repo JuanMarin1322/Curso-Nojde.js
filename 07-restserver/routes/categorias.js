@@ -1,36 +1,50 @@
 const { Router } = require('express');
 const { check }= require('express-validator');
+const { 
+    crearCategoria, 
+    obtenerCategorias, 
+    obtenerCategoria,
+    actualizarCategoria,
+    eliminarCategoria} = require('../controllers/categorias');
 
-const { validarCampos } = require('../middlewares/validar-campos');
+const { 
+    validarJWT, 
+    validarCampos } = require('../middlewares');
+
+const { idCategoriaExiste } = require('../helpers/db-validator');
 
 const router = Router();
 
 
-//Obtener todas las categorias - publico
-router.get('/', ( req, res) => {
+//Obtener todas las categorias - publicos
+router.get('/', obtenerCategorias);
 
-    res.json('GET');
-});
 //Obtener una categorias por id - publico
-router.get('/:id', ( req, res) => {
+router.get('/:id',[
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( idCategoriaExiste),
 
-    res.json('GET- por id')
-});
+], obtenerCategoria);
 
 //Crear cateogria - privado - token valido 
-router.post('/', ( req, res) => {
+router.post('/',[ 
+    validarJWT,
+    check('nombre','El nombre es obligatorio').not().isEmpty(),
+    validarCampos
+], crearCategoria);
 
-    res.json('POST')
-});
+router.put('/:id',[
+    validarJWT,
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( idCategoriaExiste),
 
-router.put('/:id', ( req, res) => {
+], actualizarCategoria);
 
-    res.json('PUT')
-});
-router.delete('/:id', ( req, res) => {
-
-    res.json('DELETE')
-});
+router.delete('/:id', [
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( idCategoriaExiste),
+],eliminarCategoria
+);
 
 
 
