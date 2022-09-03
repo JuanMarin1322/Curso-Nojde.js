@@ -26,10 +26,8 @@ router.get('/:id',[
 ],obtenerProducto);
 
 //Crear cateogria - privado - token valido 
-router.post('/:id',[ 
+router.post('/',[ 
     validarJWT,
-    check('id', 'No es un ID válido').isMongoId(),
-    check('id').custom( idProductoExiste),
     check('nombre','El nombre es obligatorio').not().isEmpty(),
     validarCampos
 ],crearProducto );
