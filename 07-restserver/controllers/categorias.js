@@ -1,6 +1,6 @@
 const { response, json } = require('express');
 
-const { Categoria, Usuario } = require('../models/');
+const { Categoria } = require('../models/');
 
 
 const crearCategoria = async ( req, res = response) => {
@@ -27,11 +27,14 @@ const crearCategoria = async ( req, res = response) => {
 }
 
 const obtenerCategorias = async ( req, res = response ) => {
-    
+        const { limite = 5, desde = 0 } = req.query;
+        const query = { estado: true };
+
       const [ total, categorias] = await Promise.all([ 
-        Categoria.countDocuments(),
+        Categoria.countDocuments(query),
         Categoria.find().populate('usuario','nombre')
-    
+        .skip( Number( desde ) )
+        .limit(Number( limite ))
           
      ]);
  
@@ -66,11 +69,15 @@ const actualizarCategoria = async ( req, res = response ) => {
     
     const { id } = req.params;
 
-    
-    
+    const {estado, usuario, ...data } =req.body;
+
+    data.nombre = data.nombre.toUpperCase();
+    data.usuario = req.usuario._id;
+
     try {
         
-        const  nombre  = req.body;
+      const nombre = data.nombre
+
         const categoriaDB = await Categoria.findOne({ nombre });
         
         if( categoriaDB ){
@@ -84,25 +91,22 @@ const actualizarCategoria = async ( req, res = response ) => {
 
     }
 
-    const  nombreDB = req.body.nombre.toUpperCase();
-    const categoria = await Categoria.findByIdAndUpdate( id, { nombre:nombreDB });
-
-    console.log(categoria);
-    // const usuarioAuth = req.usuario;
+    const categoria = await Categoria.findByIdAndUpdate( id,data , { new : true});
+    
     return res.status(201).json({
         msg:'Actualziado',
         categoria
     });
  }
 
- const eliminarCategoria = async ( req, res = response) =>{
+ const eliminarCategoria = async ( req, res = response) => {
 
     const { id } = req.params;
 
     const categoria = await Categoria.findByIdAndUpdate( id,{ estado:false });
 
     res.json({
-        msg:"Delete API - Controlador",
+        msg:"Ok, Eliminado",
         categoria,
         });
  }

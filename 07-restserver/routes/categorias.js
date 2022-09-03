@@ -9,7 +9,8 @@ const {
 
 const { 
     validarJWT, 
-    validarCampos } = require('../middlewares');
+    validarCampos, 
+    esAdminRole} = require('../middlewares');
 
 const { idCategoriaExiste } = require('../helpers/db-validator');
 
@@ -23,7 +24,7 @@ router.get('/', obtenerCategorias);
 router.get('/:id',[
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( idCategoriaExiste),
-
+    validarCampos
 ], obtenerCategoria);
 
 //Crear cateogria - privado - token valido 
@@ -35,14 +36,19 @@ router.post('/',[
 
 router.put('/:id',[
     validarJWT,
+    check('nombre','El nombre es obligatorio').not().isEmpty(),
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( idCategoriaExiste),
-
+    validarCampos
 ], actualizarCategoria);
 
 router.delete('/:id', [
+    validarJWT,
+    esAdminRole,
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( idCategoriaExiste),
+    validarCampos
+    
 ],eliminarCategoria
 );
 
