@@ -8,7 +8,7 @@ const {
     eliminarProducto, 
     actualizarProducto} = require('../controllers/productos');
 
-const { idProductoExiste } = require('../helpers/db-validator');
+const { idProductoExiste, idCategoriaExiste } = require('../helpers/db-validator');
 
 const { 
     validarJWT, 
