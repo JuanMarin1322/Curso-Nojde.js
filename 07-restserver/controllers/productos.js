@@ -22,9 +22,9 @@ const crearProducto = async ( req, res = response) => {
    
     categoria = req.body.categoria.toUpperCase();
 
-    console.log(categoria);
+    
     const categoriaDB = await Categoria.findOne({ nombre:categoria  });
-    console.log(categoriaDB)
+   
     if( !categoriaDB ){
         return res.status(400).json({
             msg:`La categoria ${ categoria  }, no existe`
